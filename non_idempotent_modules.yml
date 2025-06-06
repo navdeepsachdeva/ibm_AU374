@@ -1,0 +1,12 @@
+- name: Non Idempotent Modules/ DON'T USE
+  hosts: servera*
+  gather_facts: false
+  tasks:
+    - name: Install Python on Managed Host
+      ansible.builtin.raw: dnf install -y python3
+
+    - name: Run using Command Modules
+      ansible.builtin.command: tail -n 2 /etc/passwd
+
+    - name: Run using Shell Modules
+      ansible.builtin.shell: tail -n 2 /etc/group

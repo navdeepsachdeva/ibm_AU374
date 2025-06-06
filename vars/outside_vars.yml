@@ -1,0 +1,27 @@
+print_floor_level: "Level 14 play vars_files"
+
+# simple_list: [eth0, eth1, eth2, eth3]
+simple_list:
+  - eth0
+  - eth1
+  - eth2
+  - eth3
+
+
+complex_list:
+  - name: eth0
+    value: "eth0_value"
+  - name: eth1
+    value: "eth1_value"
+  - name: eth2
+    value: "eth2_value"
+  - name: eth3
+    value: "eth3_value"
+
+mydict:
+  eth0: "eth0_value"
+  eth1: "eth1_value"
+  eth2: "eth2_value"
+  eth3: "eth3_value"
+
+nested_list: [ 2, [4, [6, 8,1]], [10,1] ]

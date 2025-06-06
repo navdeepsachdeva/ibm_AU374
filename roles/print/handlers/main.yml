@@ -1,0 +1,6 @@
+---
+# handlers file for roles/print
+
+- name: passwd file read
+  ansible.builtin.debug:
+    msg: "Read file Successfully"

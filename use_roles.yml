@@ -1,0 +1,7 @@
+- name: Roles Best Practises Demo
+  hosts: servera*
+  gather_facts: false
+
+  roles:
+    - role: web_server
+      web_server_content: "IBM Index Page PLAY FILE"

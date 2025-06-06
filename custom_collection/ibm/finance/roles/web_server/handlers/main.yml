@@ -1,0 +1,35 @@
+---
+# handlers file for ./roles/web_server
+
+- name: Start Web Service
+  ansible.builtin.service:
+    name: "{{ web_server_service }}"
+    state: restarted
+
+- name: Application Deployed 1
+  ansible.builtin.debug:
+    msg: " Appl 1 Deployed Successfully"
+
+- name: Application Deployed 2
+  ansible.builtin.debug:
+    msg: " Appl 2 Deployed Successfully"
+  listen: Application Deployed 1
+
+- name: Application Deployed 3
+  ansible.builtin.debug:
+    msg: " Appl 3 Deployed Successfully"
+  listen: Application Deployed 1
+
+- name: Application Deployed 4
+  ansible.builtin.debug:
+    msg: " Appl 4 Deployed Successfully"
+  listen: Application Deployed 1
+
+- name: Application Deployed 5
+  ansible.builtin.debug:
+    msg: " Appl 5 Deployed Successfully"
+  listen: Application Deployed 1
+
+- name: web package installed
+  ansible.builtin.debug:
+    msg: "{{ web_server_package }} installed Successfully"

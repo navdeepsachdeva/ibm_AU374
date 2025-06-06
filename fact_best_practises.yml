@@ -1,0 +1,10 @@
+- name: DIsable Facts if NOT USING
+  hosts: servera*
+  gather_facts: false
+  tasks:
+    - name: Create a File
+      ansible.builtin.copy:
+        dest: /tmp/abc.txt
+        content: "Hello IBM Users"
+        mode: 0644
+

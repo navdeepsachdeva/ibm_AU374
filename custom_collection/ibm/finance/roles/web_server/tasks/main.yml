@@ -1,0 +1,22 @@
+---
+# tasks file for ./roles/web_server
+
+- name: Running all notified handlers
+  ansible.builtin.meta: flush_handlers
+
+- name: Install Web Package
+  ansible.builtin.dnf:
+    name: "{{ web_server_package }}"
+    state: present
+  notify:
+    - Start Web Service
+    - web package installed
+
+- name: Deploy an App
+  ansible.builtin.copy:
+    content: "{{ web_server_content }}"
+    dest: /var/www/html/index.html
+    mode: 0644
+  notify:
+    - Start Web Service
+    - Application Deployed 1

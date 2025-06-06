@@ -1,0 +1,7 @@
+collections:
+  - name: /build/ibm-finance-3.0.0.tar.gz
+    type: file
+  - name: /build/community-general-10.7.0.tar.gz
+    type: file
+  - name: /build/cisco-catalystwan-0.3.2.tar.gz
+    type: file

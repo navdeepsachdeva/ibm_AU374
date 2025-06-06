@@ -1,0 +1,11 @@
+---
+# tasks file for roles/print
+
+- name: Print the Level in Role
+  ansible.builtin.debug:
+    msg: "{{ inventory_hostname }}  == {{ print_floor_level }}"
+
+- name: Rad the File
+  ansible.builtin.command: tail -n 2 /etc/passwd
+  notify:
+    - passwd file read

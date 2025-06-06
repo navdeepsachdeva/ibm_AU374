@@ -1,0 +1,11 @@
+---
+# handlers file for ./roles/security_server
+
+- name: security package installed
+  ansible.builtin.debug:
+    msg: "Firewalld Installed"
+
+
+- name: security port opened
+  ansible.builtin.debug:
+    msg: "{{ security_server_port }} opened successfully"

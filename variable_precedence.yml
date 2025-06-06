@@ -1,0 +1,62 @@
+- name: Variable Precedence Demo
+  hosts: dev,test
+  gather_facts: false
+
+  ## Not Recommended
+  vars:
+    print_floor_level: "Level 12 play vars"
+
+  ## Development Level Only
+  vars_prompt:
+    - name: print_floor_level
+      prompt: "Which floor you work on ?"
+      private: false
+
+  ## Static Import fo Variable Files
+  vars_files:
+    - vars/outside_vars.yml
+
+  roles:
+    - role: print
+
+  tasks:
+    - name: Define Variable as Fact
+      ansible.builtin.set_fact:
+        print_floor_level: "Level 19 set_facts"
+      when: youme is not defined
+
+
+    - name: Dynamic /RunTime Import of Variable File
+      ansible.builtin.include_vars:
+        file: vars/external_vars.yml
+      when: youme is not defined
+
+    - name: Run a role based on Condition
+      ansible.builtin.include_role:
+        name: print
+      when: youme is not defined
+      vars:
+        print_floor_level: "Level 20 role (and include_role) params"
+
+    - name: Task 1 Outside Block
+      ansible.builtin.debug:
+        msg: "{{ inventory_hostname }}  == {{ print_floor_level }}"
+
+    - name: Block of Tasks
+      block:
+          - name: Task 2 Inside Block
+            ansible.builtin.debug:
+              msg: "{{ inventory_hostname }}  == {{ print_floor_level }}"
+            vars:
+              print_floor_level: "Level 17 task vars (only for the task)"
+
+          - name: Task 3 Inside Block
+            ansible.builtin.debug:
+              msg: "{{ inventory_hostname }}  == {{ print_floor_level }}"
+      when: youme is not defined
+      vars:
+        print_floor_level: "Level 16 block vars (only for tasks in block)"
+
+    - name: Task 4 Outside Block
+      ansible.builtin.debug:
+        msg: "{{ inventory_hostname }}  == {{ print_floor_level }}"

@@ -1,0 +1,18 @@
+- name: Delegate Facts/task Demo
+  hosts: servera*
+  gather_facts: true
+  tasks:
+    - name: Create a File
+      ansible.builtin.copy:
+        dest: /tmp/abc.txt
+        content: "Hello IBM Users"
+        mode: 0644
+
+    - name: Create User
+      ansible.builtin.user:
+        name: "{{ ansible_local.emp.user.user_name }}"
+        uid: "{{ ansible_local.emp.user.user_id }}"
+        comment: "Works for {{ ansible_local.emp.dept.dept_name}} in {{ ansible_local.emp.dept.dept_location }}"
+      delegate_facts: true
+      delegate_to: serverb.lab.example.com
+      become: true

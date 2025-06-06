@@ -1,0 +1,29 @@
+## INI Inventory FORMAT
+
+workstation.lab.example.com
+
+[all:vars]
+print_floor_level="Level 3 inventory file"
+company="ibm"
+var1="value_all"
+
+[dev]
+servera.lab.example.com var1="value_SERVERA" print_floor_level="Level 8 inventory file"
+serverb.lab.example.com ansible_become=true
+172.25.250.13
+
+[dev:vars]
+var1="value_dev"
+
+[test]
+serverc.lab.example.com
+serverd.lab.example.com
+172.25.250.10
+
+[prod]
+servere.lab.example.com
+serverf.lab.example.com
+172.25.250.11
+
+# [range]
+# 172.25.25.[1:5]

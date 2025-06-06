@@ -1,0 +1,22 @@
+- name: Loop Dict/List Demo
+  hosts: servera*
+  gather_facts: false
+  vars_files:
+    - vars/outside_vars.yml
+  tasks:
+    - name: Print Simple List
+      ansible.builtin.debug:
+        msg: "{{ item }}"
+      loop: "{{ simple_list }}"
+
+    - name: Print Complex List
+      ansible.builtin.debug:
+        msg: "{{ item.name }} // {{ item.value }}"
+      loop: "{{ complex_list }}"
+
+    - name: Print Dictionary
+      ansible.builtin.debug:
+        msg: "{{ item['key'] }} == {{ item['value'] }}"
+        # msg: "{{ item.key }} == {{ item.value }}"
+      loop: "{{ mydict | dict2items }}"
+      # loop ONLY take List/Array

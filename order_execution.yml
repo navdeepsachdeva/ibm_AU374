@@ -1,0 +1,53 @@
+- name: Order of Task Execution
+  hosts: servera*
+  gather_facts: true
+  pre_tasks:
+    - name: Check pre-requsites first
+      ansible.builtin.assert:
+        that:
+          - ansible_architecture == "x86_64"
+          - ansible_memory_mb.real.free >= 100
+          - ansible_local.emp.dept.dept_name == "finance"
+        success_msg: "Enough Memory and arch"
+        fail_msg: "Not enough resources"
+
+    - name: Inform Client about service down
+      ansible.builtin.command: sleep 2
+      notify:
+        - services_down
+
+
+  post_tasks:
+    - name: Verify content of http://localhost
+      ansible.builtin.uri:
+        url: http://servera.lab.example.com
+        return_content: true
+
+    - name: Inform Client about service up
+      ansible.builtin.command: sleep 2
+      notify:
+        - services_up
+        
+  tasks:
+    - name: Extra Task
+      ansible.builtin.command: sleep 2
+      notify:
+        - extra_handler
+
+  handlers:
+    - name: extra_handler
+      ansible.builtin.debug:
+        msg: "Slept nicely in tasks"
+
+    - name: services_down
+      ansible.builtin.debug:
+        msg: "Insta Down Please Sleep"
+
+    - name: services_up
+      ansible.builtin.debug:
+        msg: "Insta Up Start wasting time"
+
+  roles:
+    - role: web_server
+      become: true
+

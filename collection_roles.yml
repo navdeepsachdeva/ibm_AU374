@@ -1,0 +1,5 @@
+- name: Demo for Collection ROles/modules
+  hosts: servera*
+  gather_facts: false
+  roles:
+    - cisco.catalystwan.health_checks

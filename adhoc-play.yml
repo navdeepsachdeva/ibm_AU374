@@ -1,0 +1,29 @@
+- name: COnverting Ad-Hoc to Playbook
+  hosts: servera*
+  gather_facts: false
+  remote_user: devops
+  # become: true
+  tasks:
+    - name: Create a User
+      ansible.builtin.user:
+        name: natalie
+        comment: "Natalie IBM Swiss OCP"
+      become: true
+
+    - name: Create a File
+      ansible.builtin.copy:
+        dest: /tmp/abc.txt
+        content: "Hello IBM Users"
+
+    - name: Open Firewalld Port
+      ansible.posix.firewalld:
+        service: http
+        permanent: yes
+        state: enabled
+        immediate: true
+      become: true
+
+    ## - list of something
+    ## Option of Modules is right indent to module
+    ## become is task/play level attribute
+    ## indentation should be under module/play

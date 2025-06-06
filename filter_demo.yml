@@ -1,0 +1,25 @@
+- name: Filters Demo
+  hosts: servera*
+  gather_facts: false
+  vars:
+    me: "filters"
+    myarray: [ 4, 8,8,7, 10, 6,1,0, 2, 1 ]
+    nested_list: [ 2, [4, [6, 8,1]], [10,1] ]
+  tasks:
+    - name: Just Printing
+      ansible.builtin.debug:
+        msg: "Format, parse, and {{ 'define' | capitalize }} the values of variables using {{ (me | upper | length) + 10 }} and {{ youme | default('Not Available') }}"
+
+    - name: Array
+      ansible.builtin.debug:
+        msg: "{{ myarray | sort | unique }}"
+ 
+    - name: Loop Array
+      ansible.builtin.debug:
+        msg: "{{ item + 10 }}"
+      loop: "{{ myarray | sort | unique }}"
+
+    - name: Nested List
+      ansible.builtin.debug:
+        msg: "{{ nested_list | flatten  | sort | unique }}"
+

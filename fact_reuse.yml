@@ -1,0 +1,26 @@
+- name: Collect Facts Once
+  hosts: servera*
+  gather_facts: false
+  tasks:
+    - name: Collect Limted Facts
+      ansible.builtin.setup:
+        gather_subset:
+          - 'min'
+          - '!all'
+          - 'network'
+    - name: Create a File
+      ansible.builtin.copy:
+        dest: /tmp/abc.txt
+        content: "Hello {{ ansible_architecture }} {{ansible_default_ipv4.address}}"
+        mode: 0644
+
+- name: Reuse Facta already Collected
+  hosts: servera*
+  gather_facts: false
+  tasks:
+    - name: Create a File
+      ansible.builtin.copy:
+        dest: /tmp/me.txt
+        content: "Hello {{ ansible_python_version  }}"
+        mode: 0644
+

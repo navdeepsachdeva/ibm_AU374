@@ -1,0 +1,5 @@
+collections:
+  #- name: redhat.openshift
+  #- name: /home/student/Downloads/cisco-catalystwan-0.3.2.tar.gz
+  - name: /home/student/Downloads/community-general-10.7.0.tar.gz
+  #- name: community.dns

@@ -1,0 +1,43 @@
+- name: Install Web Server
+  hosts: servera*
+  gather_facts: false
+  become: true
+  tasks:
+
+    - name: Install Good Way
+      ansible.builtin.dnf:
+        name:
+          - httpd
+          - mariadb-server
+          - vsftpd
+        state: present
+
+    - name: Install Bad Way
+      ansible.builtin.dnf:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - httpd
+        - mariadb-server
+        - vsftpd
+
+
+    - name: Deploy an App
+      ansible.builtin.copy:
+        content: "{{ item.content }}"
+        dest: /var/www/html/{{ item.file }}
+        mode: 0644
+      loop:
+        - content: "IBM Index Page"
+          file: index.html
+        - content: "IBM First Page"
+          file: first.html
+
+    - name: Start Web Service
+      ansible.builtin.service:
+        name: "{{ item }}"
+        state: started
+      loop:
+        - httpd
+        - mariadb-server
+        - vsftpd

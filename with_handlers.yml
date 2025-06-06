@@ -1,0 +1,27 @@
+- name: Handlers Dependency Demo - Install Web Server
+  hosts: servera*
+  gather_facts: false
+  vars:
+    content: "IBM Index Page"
+  tasks:
+    - name: Install Web Package
+      ansible.builtin.dnf:
+        name: httpd
+        state: present
+      notify:
+        - Start Web Service
+
+    - name: Deploy an App
+      ansible.builtin.copy:
+        content: "{{ content }}"
+        dest: /var/www/html/index.html
+        mode: 0644
+      notify:
+        - Start Web Service
+
+  handlers:
+
+    - name: Start Web Service
+      ansible.builtin.service:
+        name: httpd
+        state: restarted
